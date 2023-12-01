@@ -34,7 +34,7 @@ const database = [
     },
     {
       operateur: "credit",
-      titre: "Realisation de site web2",
+      titre: "Realisation de site web",
       desc: "ma mairie",
       montant: 1800,
       percent: 236.84,
@@ -80,7 +80,7 @@ maData.operateur = operator
 maData.titre = title
 maData.desc = description
 maData.montant = Number(montants).toFixed(2)
-
+maData.percent= pourcentage(datapoints[datapoints.length-1],maData.montant)
 
  //operation pour modifier la courbe
  const mytab = datapoints;
@@ -211,13 +211,19 @@ function displayData(data) {
     maindiv.innerHTML = htmlContent;
     document.querySelector('.solde').textContent = datapoints[datapoints.length -1] + " €";
     good();
-    saveMoves();
+    // saveMoves();
 }
 
 setTimeout(displayData(database), 1000)
 
-let mouvements = JSON.parse(localStorage.getItem('moves'));
-function saveMoves(mouvements) {
-    mouvements = datapoints;
-    localStorage.setItem('moves', JSON.stringify(mouvements));
-};
+// let mouvements = localStorage.setItem('moves', JSON.stringify(datapoints));
+// function saveMoves() {
+//     JSON.parse(localStorage.getItem('moves'));
+// };
+
+
+
+function pourcentage(tabValue,enterValue) {
+    let resultPourcent = enterValue*100 / tabValue
+    return resultPourcent.toFixed(2)
+}
