@@ -5,37 +5,41 @@ $(document).ready(function () {
 });
 const database = [
     {
-    operateur : "credit",
-	titre : "Salaire",
-	desc : "mois de septembre",
-	montant : 1200
+      operateur: "credit",
+      titre: "Salaire",
+      desc: "mois de septembre",
+      montant: 1200,
+      percent: 100,
     },
     {
-    operateur : "debit",
-	titre : "Loyer",
-	desc : "mois d'aout",
-	montant : 450
+      operateur: "debit",
+      titre: "Loyer",
+      desc: "mois d'aout",
+      montant: 450,
+      percent: 37.5,
     },
     {
-    operateur : "credit",
-	titre : "Vente Boncoin",
-	desc : "jeu PS5",
-	montant : 25
+      operateur: "credit",
+      titre: "Vente Boncoin",
+      desc: "jeu PS5",
+      montant: 25,
+      percent: 3.33,
     },
     {
-    operateur : "debit",
-	titre : "Restaurant",
-	desc : "mc do",
-	montant : 15
+      operateur: "debit",
+      titre: "Restaurant",
+      desc: "mc do",
+      montant: 15,
+      percent: 1.9,
     },
     {
-    operateur : "credit",
-	titre : "Realisation de site web",
-	desc : "ma mairie",
-	montant : 1800
-    }
-]
-
+      operateur: "credit",
+      titre: "Realisation de site web2",
+      desc: "ma mairie",
+      montant: 1800,
+      percent: 236.84,
+    },
+  ];
 console.log(database);
 
 
@@ -126,7 +130,18 @@ console.log(foundCredit);
 console.log(foundDebit);
 
 
-
+const varier = document.querySelector('.text-center small');
+function good() {
+    if (datapoints[datapoints.length -1] <= 100 ) {
+        varier.textContent = 'On est dans la merde'
+        varier.classList.add('bad')
+        
+    }
+};
+// ex var e = document.getElementById('logo');
+// e.style.color = 'red';
+// e.style.backgroundColor = 'yellow';
+// e.style.fontSize = '12px';
 
 /// Toggle Vincent
 
@@ -161,13 +176,6 @@ navBtn3.addEventListener('click', () => {
 });
 
 
-/////////////Solde total Vincent
-
-    document.getElementById('solde').textContent = (`[datapoints].map`);
-
-
-
-
 //////////////Florent 
 //affichage des donnees du tableau d'objets
 function displayData(data) {
@@ -175,34 +183,41 @@ function displayData(data) {
     let htmlContent = "";
     data.forEach((e) => {
       htmlContent +=
-        `<!-- operation -->
-            <div class="operation ${e.operateur}"> 
-                <div class="grid-x grid-padding-x align-middle">
-                    <div class="cell shrink">
-                        <div class="picto">
-                        <img src="./assets/images/` +
-        (e.operateur === "credit" ? "sac-dargent" : "depenses") +
-        `.png" alt="${e.operateur}" />
-                        </div>
-                    </div>
-                    <div class="cell auto">
-                        <div>
-                            <h2>${e.titre}</h2>
-                            <small>${e.desc}</small>
-                        </div>
-                    </div>
-                    <div class="cell small-3 text-right">
-                        <div>
-                            <p class="count">${e.montant}€</p>
-                            //<small>100%</small>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
+      `<!-- operation -->
+      <div class="operation ${e.operateur}"> 
+      <div class="grid-x grid-padding-x align-middle">
+      <div class="cell shrink">
+      <div class="picto">
+      <img src="./assets/images/` +
+      (e.operateur === "credit" ? "sac-dargent" : "depenses") +
+      `.png" alt="${e.operateur}" />
+      </div>
+      </div>
+      <div class="cell auto">
+      <div>
+      <h2>${e.titre}</h2>
+      <small>${e.desc}</small>
+      </div>
+      </div>
+      <div class="cell small-3 text-right">
+      <div>
+      <p class="count">${e.montant}€</p>
+      <small>${e.percent}%</small>
+      </div>
+      </div>
+      </div>
+      </div>`;
     });
     maindiv.innerHTML = htmlContent;
-  }
+    document.querySelector('.solde').textContent = datapoints[datapoints.length -1] + " €";
+    good();
+    saveMoves();
+}
 
-  setTimeout(displayData(database), 1000)
+setTimeout(displayData(database), 1000)
 
-  
+let mouvements = JSON.parse(localStorage.getItem('moves'));
+function saveMoves(mouvements) {
+    mouvements = datapoints;
+    localStorage.setItem('moves', JSON.stringify(mouvements));
+};
